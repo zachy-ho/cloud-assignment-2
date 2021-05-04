@@ -1,0 +1,32 @@
+---
+
+# Add proxy to /etc/environment
+- name: Add proxy to /etc/environment
+  become: yes
+  lineinfile:
+    line: "HTTP_PROXY=\"{{ proxy }}\"\nHTTPS_PROXY=\"{{ proxy }}\"\nhttp_proxy=\"{{ proxy }}\"\nhttps_proxy=\"{{ proxy }}\"\nno_proxy=\"localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au\"\n"
+    dest: /etc/environment
+
+- name: Activate proxy settings for current session
+  become: yes
+  shell: echo 'Proxy activation success'
+  environment:
+    HTTP_PROXY: "{{ proxy }}"
+    HTTPS_PROXY: "{{ proxy }}"
+    http_proxy: "{{ proxy }}"
+    https_proxy: "{{ proxy }}"
+    no_proxy: "localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au"
+
+- name: Update apt
+  become: yes
+  apt:
+    upgrade: yes
+    update_cache: yes
+# apt-get upgrade; apt-get update
+
+- name: Install dependencies
+  become: yes
+  apt:
+    name: ['vim','unzip','git','curl']
+    state: latest
+    update_cache: yes
