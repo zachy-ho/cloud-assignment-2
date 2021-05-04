@@ -40,10 +40,10 @@
 - name: Create inventory file
   copy:
     content: "[all:vars]\nansible_user=ubuntu\n\n"
-    dest: "/cloud-assignment-2/ansible/hosts.ini"
+    dest: "hosts.ini"
 
 - name: set ip addresses to inventory file
   lineinfile:
     line: "[{{ item.name }}]\n{{ item.ip }}\n"
-    dest: "/cloud-assignment-2/ansible/hosts.ini"
+    dest: "hosts.ini"
   loop: '{{ ip_addresses }}'
