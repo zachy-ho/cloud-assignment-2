@@ -2,7 +2,6 @@
 availability_zone: melbourne-qh2-uom
 instance_image: f8b79936-6616-4a22-b55d-0d0a1d27bceb # Ubuntu 20.04
 instance_key_name: group49
-instance_flavor: uom.mse.2c9g
 project_working_directory: /home/xuwang/CCC-COMP90024
 
 # Security groups
@@ -27,6 +26,7 @@ security_groups:
   #   remote_ip_prefix: 0.0.0.0/0
 
 # Volumes:
+volumes:
   - vol_name: instance_1_volume
     vol_size: 10
   - vol_name: instance_2_volume
@@ -39,10 +39,14 @@ security_groups:
 # Instance
 instances:
   - name: instance_1
+    flavor: uom.mse.1c4g
     volumes: ['instance_1_volume']
   - name: instance_2
+    flavor: uom.mse.2c9g
     volumes: ['instance_2_volume']
   - name: instance_3
+    flavor: uom.mse.2c9g
     volumes: ['instance_3_volume']
   - name: instance_4
+    flavor: uom.mse.2c9g
     volumes: ['instance_4_volume']
