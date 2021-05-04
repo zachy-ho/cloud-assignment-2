@@ -21,11 +21,6 @@ MDJhMzgyMDQ2YjBlZWU3
   | instance_3 |  100G   |
   | instance_4 |  100G   |
   
-  | instance_1 |  10G |
-  | instance_2 | 100G |
-  | instance_3 | 100G |
-  | instance_4 | 100G |
-  
 * Create security Groups (port 22 for SSH and 80 for HTTP)
 
 * Create instances
