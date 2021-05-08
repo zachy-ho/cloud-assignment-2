@@ -18,6 +18,7 @@
     no_proxy: "localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar.org.au,.storage.unimelb.edu.au,.cloud.unimelb.edu.au"
 
 - name: Update apt
+  tags: always
   become: yes
   apt:
     upgrade: yes
@@ -25,8 +26,16 @@
 # apt-get upgrade; apt-get update
 
 - name: Install dependencies
+  tags: always
   become: yes
   apt:
-    name: ['vim','unzip','git','curl']
+    name: ['vim','unzip','git','curl','xfsprogs','apt-transport-https','build-essential','ca-certificates','python-setuptools','software-properties-common']
     state: latest
     update_cache: yes
+  
+# - name: Update pip
+#   tags: always
+#   become: yes
+#   pip:
+#     name: ['pip']
+#     state: latest

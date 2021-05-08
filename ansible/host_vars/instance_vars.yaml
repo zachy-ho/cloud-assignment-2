@@ -25,16 +25,24 @@ security_groups:
   #   port_range_max: 65535
   #   remote_ip_prefix: 0.0.0.0/0
 
-# Volumes:
+# Volumes
 volumes:
   - vol_name: instance_1_volume
     vol_size: 10
+    device: /dev/vdb
+    mountpoint: /data
   - vol_name: instance_2_volume
     vol_size: 100
+    device: /dev/vdb
+    mountpoint: /data
   - vol_name: instance_3_volume
     vol_size: 100
+    device: /dev/vdb
+    mountpoint: /data
   - vol_name: instance_4_volume
     vol_size: 100
+    device: /dev/vdb
+    mountpoint: /data
 
 # Instance
 instances:
