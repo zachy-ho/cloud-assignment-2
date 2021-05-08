@@ -29,13 +29,33 @@
   tags: always
   become: yes
   apt:
-    name: ['vim','unzip','git','curl','xfsprogs','apt-transport-https','build-essential','ca-certificates','python-setuptools','software-properties-common']
+    name: ['python3-pip','git','xfsprogs','apt-transport-https','build-essential','ca-certificates','curl','gnupg','lsb-release','python-setuptools','software-properties-common']
+    # ['vim','unzip']
     state: latest
     update_cache: yes
-  
-# - name: Update pip
-#   tags: always
-#   become: yes
-#   pip:
-#     name: ['pip']
-#     state: latest
+
+- name: Add docker GPG key
+  become: yes
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add docker apt repo
+  become: yes
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu bionic stable"
+    state: present
+    update_cache: yes
+
+- name: install docker
+  become: yes
+  apt:
+    name: ['docker-ce','docker-ce-cli','containerd.io']
+    state: latest
+    update_cache: yes
+
+- name: Install docker-compose
+  become: yes
+  pip:
+    name: ['docker-compose']
+    state: present
