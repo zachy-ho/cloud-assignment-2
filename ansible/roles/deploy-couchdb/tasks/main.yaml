@@ -1,0 +1,15 @@
+---
+- name: start couchdb container
+  become: yes
+  docker_container:
+    name: "{{ couchdb_container_name }}"
+    image: "ibmcom/couchdb3:{{ couchdb_VERSION }}"
+    ports:
+      - "5984:5984" # Clustered mode
+      - "4359:4369" # EPMD
+      - "9100:9100" # Single Erlang application
+    env:
+      COUCHDB_USER: "{{ couchdb_user }}"
+      COUCHDB_PASSWORD: "{{ couchdb_password }}"
+      NODENAME: "{{ ansible_host }}"
+      COUCHDB_SECRET: "{{ couchdb_cookie }}"
