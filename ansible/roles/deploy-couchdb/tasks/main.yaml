@@ -6,8 +6,10 @@
     image: "ibmcom/couchdb3:{{ couchdb_VERSION }}"
     ports:
       - "5984:5984" # Clustered mode
-      - "4359:4369" # EPMD
-      - "9100:9100" # Single Erlang application
+      - "4369:4369" # EPMD
+      - "9100:9100" # Erlang application
+      - "80:80"
+      - "433:433"
     env:
       COUCHDB_USER: "{{ couchdb_user }}"
       COUCHDB_PASSWORD: "{{ couchdb_password }}"
