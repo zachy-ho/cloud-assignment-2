@@ -1,5 +1,5 @@
 ---
-- name: Make file syastem
+- name: Make file system
   tags: 'volumes'
   become: yes
   filesystem:
