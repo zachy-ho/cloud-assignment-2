@@ -2,7 +2,6 @@
 availability_zone: melbourne-qh2-uom
 instance_image: f8b79936-6616-4a22-b55d-0d0a1d27bceb # Ubuntu 20.04
 instance_key_name: group49
-project_working_directory: /home/xuwang/CCC-COMP90024
 
 # Security groups
 security_groups:
