@@ -2,9 +2,11 @@
   vars_files:
     - host_vars/instance_vars.yaml
     - host_vars/proxy_vars.yaml
+    - host_vars/remote_vars.yaml
   gather_facts: true
 
   roles:
     - environment-installation
     - environment-mount
+    - environment-setup-docker
   
