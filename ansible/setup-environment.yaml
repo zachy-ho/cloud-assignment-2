@@ -9,4 +9,6 @@
     - environment-installation
     - environment-mount
     - environment-setup-docker
+    - environment-git-clone
+    
   

@@ -2,7 +2,7 @@ ansible_user: ubuntu
 remote_working_directory: /home/ubuntu/COMP90024
 remote_working_directory_big_data: /home/ubuntu/COMP90024/data
 repository_name: comp90024-project2
-git_repo: /home/ubuntu/COMP90024/comp90024-project2
+git_repo: /home/ubuntu/COMP90024/cloud-assignment-2
 couchdb_user: admin
 couchdb_pass: admin
 couchdb_VERSION: '3.1.1'
