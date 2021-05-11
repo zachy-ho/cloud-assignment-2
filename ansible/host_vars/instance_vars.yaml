@@ -6,23 +6,29 @@ project_working_directory: /home/xuwang/CCC-COMP90024
 
 # Security groups
 security_groups:
-  # - name: ssh-security-group
-  #   description: "security group for SSH access"
-  #   protocol: tcp
-  #   port_range_min: 22
-  #   port_range_max: 22
-  #   remote_ip_prefix: 0.0.0.0/0
-  # - name: http-security-group
-  #   description: "security group for HTTP"
-  #   protocol: tcp
-  #   port_range_min: 80
-  #   port_range_max: 80
-  #   remote_ip_prefix: 0.0.0.0/0
-  - name: all-tcp-security-group
-    description: "security group for any possible TCP connection"
+  - name: ssh-security-group
+    description: "security group for SSH access"
     protocol: tcp
-    port_range_min: 1
-    port_range_max: 65535
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: 0.0.0.0/0
+  - name: http-security-group
+    description: "security group for HTTP"
+    protocol: tcp
+    port_range_min: 80
+    port_range_max: 80
+    remote_ip_prefix: 0.0.0.0/0
+  - name: http-security-group
+    description: "security group for HTTPS"
+    protocol: tcp
+    port_range_min: 443
+    port_range_max: 443
+    remote_ip_prefix: 0.0.0.0/0
+  - name: couchdb-security-group
+    description: "security group for couchdb"
+    protocol: tcp
+    port_range_min: 5984
+    port_range_max: 5984
     remote_ip_prefix: 0.0.0.0/0
 
 # Volumes

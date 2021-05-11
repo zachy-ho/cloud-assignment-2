@@ -29,7 +29,7 @@
   tags: always
   become: yes
   apt:
-    name: ['python3-pip','git','xfsprogs','apt-transport-https','build-essential','ca-certificates','curl','gnupg','lsb-release','python-setuptools','software-properties-common','nodejs','npm',node-grunt-cli','jq']
+    name: ['python3-pip','git','xfsprogs','apt-transport-https','build-essential','ca-certificates','curl','gnupg','lsb-release','python-setuptools','software-properties-common','nodejs','npm','node-grunt-cli','jq']
     # ['vim','unzip']
     state: latest
     update_cache: yes

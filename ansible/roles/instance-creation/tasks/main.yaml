@@ -39,12 +39,17 @@
 
 - name: Create inventory file
   copy:
-    content: "[all:vars]\nansible_user=ubuntu\nansible_ssh_private_key_file=inventory/cloud.key\nansible_ssh_common_args=\"-o StrictHostKeyChecking=no\"\n\n"
-    dest: "inventory/hosts"
+    content: "[all:vars]\nansible_user=ubuntu\nansible_ssh_private_key_file=inventory/cloud.key\nansible_ssh_common_args=\"-o StrictHostKeyChecking=no\"\n\n[instances:children]\ninstance_1\ninstance_2\ninstance_3\ninstance_4\n\n"
+    dest: "inventory/hosts.ini"
 # [dbServers:children]\ninstance_1\n\n[dbSlave:children]\ninstance_2\ninstance_3\n\n
+
+- name: set groups to inventory file
+  lineinfile:
+    line: "[frontend:children]\ninstance_1\n\n[backend:children]\ninstance_3\n\n[dbServers:children]\ndbMaster\ndbWorker\n\n[dbMaster:children]\ninstance_2\n\n[dbWorker:children]\ninstance_3\ninstance_4\n"
+    dest: "inventory/hosts.ini"
 
 - name: set ip addresses to inventory file
   lineinfile:
     line: "[{{ item.name }}]\n{{ item.ip }}\n"
-    dest: "inventory/hosts"
+    dest: "inventory/hosts.ini"
   loop: '{{ ip_addresses }}'

@@ -13,11 +13,11 @@ MDJhMzgyMDQ2YjBlZWU3
 * Create volumes
   | Instances  | Volumes |
   | :--------: | :-----: |
-  | instance_1 |   10G   |
+  | instance_1 |  100G   |
   | instance_2 |  100G   |
   | instance_3 |  100G   |
   | instance_4 |  100G   |
-* Create security Groups (port 22 for SSH and 80 for HTTP)
+* Create security Groups (port 1 - 65535)
 * Create instances
 ```
 ./launch-instances.sh
