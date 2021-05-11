@@ -9,15 +9,13 @@ from urllib3.exceptions import ProtocolError
 import creds
 couch_server=couchdb.Server("http://admin:admin@localhost:5984")
 db_nam=input("Enter a name for the database(only lowercase characters):  ")
-user_name=input("Enter a name for user database(only lowercase characters):  ")
+
 try:
     db = couch_server.create(db_nam)
 except:
     db=couch_server[db_nam]
-if user_name in couch_server:
-    user_datab = couch_server[user_name]
-else:
-    user_datab = couch_server.create(user_name)
+
+user_datab=[]
 
 interested_keywords=['covid19','coronavirus','covid-19','economy','employment','income','covid','pandemic','outbreak','social distancing','community spread','self-isolation',
                      'quarantine','selfquarantine',
@@ -31,30 +29,36 @@ class dbListener(SL):
         twt=json.loads(raw_data)
         doc_id=twt["id_str"]
         if twt["place"] is not None:
-            if doc_id not in db and twt["lang"]=="en" and twt["place"]["full_name"]!="null" and twt["place"]["bounding_box"]!="null":
+            if twt["lang"]=="en" and twt["place"]["full_name"]!="null" and twt["place"]["bounding_box"]!="null":
                 for i in interested_keywords:
                     if i in twt["text"].lower():
-                        db[doc_id]={"id_str":twt["id_str"],"text":twt["text"],"Date":twt["created_at"],
-                    "User_Details":twt["user"],
-                    "Place":twt["place"]["full_name"],
-                    "Bounding Box":twt["place"]["bounding_box"],
-                    "retweeted":twt["retweeted"],
-                    "hashtags_details":twt["entities"]["hashtags"],
-                    "lang":twt["lang"]}
+                        if doc_id not in db:
+                            db_doc={"_id":doc_id,"text":twt["text"],"Date":twt["created_at"],
+                                    "User_Details":twt["user"],
+                                    "Place":twt["place"]["full_name"],
+                                    "Bounding Box":twt["place"]["bounding_box"],
+                                    "retweeted":twt["retweeted"],
+                                    "hashtags_details":twt["entities"]["hashtags"],
+                                    "lang":twt["lang"]}
+                        
+                            db.save(db_doc)
+                    
         user_id=twt["user"]["id_str"]
         if user_id not in user_datab:
             try:
                 
                 for i in tweepy.Cursor(api.user_timeline,user_id).items(200):
+                    db_us_doc=dict()
                     tweet=i._json
                     if tweet["place"] is not None:
                         cc_tweet=(tweet["place"]["country_code"]).lower()
                         country=(tweet["place"]["country"]).lower()
                         if cc_tweet=="au" or country=="australia":
-                            if tweet["id_str"] not in db and tweet["lang"]=="en" and tweet["place"]["full_name"]!="null" and tweet["place"]["bounding_box"]!="null":
+                            if tweet["lang"]=="en" and tweet["place"]["full_name"]!="null" and tweet["place"]["bounding_box"]!="null":
                                 for j in interested_keywords:
                                     if j in tweet["text"].lower():
-                                        db[tweet["id_str"]]={"id_str":tweet["id_str"],
+                                        if tweet["id_str"] not in db:
+                                            db_us_doc={"_id":tweet["id_str"],
                                     "text":tweet["text"],
                                     "Date":tweet["created_at"],
                                     "User_Details":tweet["user"],
@@ -63,13 +67,18 @@ class dbListener(SL):
                                     "retweeted":tweet["retweeted"],
                                     "hashtags_details":tweet["entities"]["hashtags"],
                                     "lang":tweet["lang"]}
-                                        user_datab[user_id] = {"user_":tweet["user"]["screen_name"]}
+                    if db_us_doc!={}:
+                        db.save(db_us_doc)
+                        if user_id not in user_datab:
+                            user_datab.append(user_id)
+                            #print(user_datab)
+                        
                                     
-            except couchdb.http.ResourceConflict:
-                time.sleep(5)
-            except BaseException as e:
+           
+            except Exception as e:
                 print(e)
                 time.sleep(5)
+                pass
             
 
         return True
