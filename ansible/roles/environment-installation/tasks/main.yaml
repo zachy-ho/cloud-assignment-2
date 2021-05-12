@@ -10,7 +10,7 @@
 - name: Reboot instance
   become: yes
   reboot:
-    reboot_timeout: 1200
+    reboot_timeout: 6000
 
 - name: Update apt
   tags: always
