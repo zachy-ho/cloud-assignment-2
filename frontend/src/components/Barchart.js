@@ -37,6 +37,10 @@ const get_states = (data) => {
   return Object.keys(data)
 }
 
+const get_employment_rates = (data) => {
+
+}
+
 function Barchart() {
   const [trace1, setTrace1] = useState({})
 
