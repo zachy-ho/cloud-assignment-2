@@ -1,5 +1,0 @@
----
-- name: Pull repo
-  shell: git pull
-  args:
-    chdir: '{{ remote_git_directory }}'

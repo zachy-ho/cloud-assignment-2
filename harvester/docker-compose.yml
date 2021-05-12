@@ -1,0 +1,6 @@
+version: '3.9'
+services: 
+    harvest:
+        build: .
+        volumes:
+            - .:/usr/harvest

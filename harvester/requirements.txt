@@ -1,0 +1,3 @@
+tweepy
+couchdb
+urllib3

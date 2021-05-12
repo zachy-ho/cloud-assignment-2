@@ -1,10 +1,10 @@
-- hosts: dbServers
-  vars_files:
-    - host_vars/remote_vars.yaml
-  gather_facts: true
+# - hosts: dbServers
+#   vars_files:
+#     - host_vars/remote_vars.yaml
+#   gather_facts: true
 
-  roles:
-    - deploy-couchdb
+#   roles:
+#     - deploy-couchdb
 
 - hosts: dbMaster
   vars_files:
@@ -12,6 +12,5 @@
   gather_facts: true
 
   roles:
-    - deploy-cluster
-    - deploy-git-pull
-    # - deploy-crawler
+    # - deploy-cluster
+    - deploy-harvester
