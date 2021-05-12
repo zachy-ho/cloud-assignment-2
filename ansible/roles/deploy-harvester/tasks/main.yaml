@@ -14,10 +14,10 @@
   become: yes
   shell: docker-compose down --rmi local
   args:
-    chdir: '{{ remote_git_directory }}/cloud-assignment-2/harvester'
+    chdir: '{{ remote_working_directory }}/cloud-assignment-2/harvester'
 
 - name: Restart server
   become: yes
   shell: docker-compose up --build -d
   args:
-    chdir: '{{ remote_git_directory }}/cloud-assignment-2/harvester'
+    chdir: '{{ remote_working_directory }}/cloud-assignment-2/harvester'
