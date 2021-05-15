@@ -3,7 +3,7 @@
   become: yes
   docker_container:
     name: "{{ couchdb_container_name }}"
-    image: "ibmcom/couchdb3:{{ couchdb_VERSION }}"
+    image: "couchdb:{{ couchdb_VERSION }}"
     ports:
       - "5984:5984" # Clustered mode
       - "4369:4369" # EPMD

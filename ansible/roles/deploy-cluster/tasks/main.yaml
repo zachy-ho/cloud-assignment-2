@@ -80,3 +80,12 @@
       Content-Type: "application/json"
 # curl -XPOST "http://${user}:${pass}@${masternode}:5984/_cluster_setup"\
 #     --header "Content-Type: application/json" --data "{\"action\": \"finish_cluster\"}"
+- name: Install "add-cors-to-couchdb" node.js package globally.
+  become: yes
+  npm:
+    name: add-cors-to-couchdb
+    global: yes
+
+- name: Modify CORS configuration to couchdb
+  become: yes
+  shell: "add-cors-to-couchdb http://\"{{ ansible_host }}\":5984 -u \"{{ couchdb_user }}\" -p admin"
