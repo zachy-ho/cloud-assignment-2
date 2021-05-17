@@ -44,15 +44,20 @@ class dataLoader:
                 subDict['yth_unemp_rt_15_24'] = float(feature['properties']['unemp_rt_15'])
                 subDict['mpy_rt_15_24'] = float(feature['properties']['unemp_rt_15'])
                 subDict['state_name_2016'] = feature['properties']["state_name_2016"]
+                subDict["sa4_name_2016"] = feature['properties']['sa4_name_2016']
+                db.save(subDict)
                 data[feature['properties']['sa4_name_2016']] = subDict
+            flag = False
         for city in cities:
             subDict = {}
             subDict['unemp_rt_15'] = aggregator[city]['unemp_rt_15'][1]/aggregator[city]['unemp_rt_15'][0]
             subDict['yth_unemp_rt_15_24'] = aggregator[city]['yth_unemp_rt_15_24'][1]/aggregator[city]['yth_unemp_rt_15_24'][0]
             subDict['mpy_rt_15_24'] = aggregator[city]['mpy_rt_15_64'][1]/aggregator[city]['mpy_rt_15_64'][0]
             subDict['state_name_2016'] = aggregator[city]['state']
+            subDict["sa4_name_2016"] = city
+            db.save(subDict)
             data[city] = subDict
-        db.save(data)
+        # db.save(data)
 
 if __name__== __name__:
     loading = dataLoader()
