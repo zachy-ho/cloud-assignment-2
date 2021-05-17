@@ -8,7 +8,7 @@
   become: yes
   template:
     src: aurinSettings.py.j2
-    dest: '{{ remote_working_directory }}/cloud-assignment-2/aurin/harvesterSettings.py'
+    dest: '{{ remote_working_directory }}/cloud-assignment-2/aurin/aurinSettings.py'
 
 - name: Shutdown previous server
   become: yes
