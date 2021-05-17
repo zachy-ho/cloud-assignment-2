@@ -10,3 +10,4 @@ couchdb_cookie: 'a192aeb9904e6590849337933b000c99'
 couchdb_cluster_name: '_cluster_setup'
 couchdb_container_name: 'couchdb_'
 couchdb_db_name: "tweets-db"
+couchdb_aurin_db_name: "aurin-db"

@@ -1,9 +1,10 @@
 import json
 import pandas as pd
 import couchdb
+from aurinSettings import host_ip, couchdb_name
 
-couch_server=couchdb.Server("http://admin:admin@localhost:5984")
-db_nam=input("Enter a name for the database(only lowercase characters):  ")
+couch_server=couchdb.Server("http://admin:admin@"+host_ip+":5984")
+db_nam=couchdb_name
 
 try:
     db = couch_server.create(db_nam)
