@@ -52,7 +52,7 @@ class dataLoader:
             subDict['mpy_rt_15_24'] = aggregator[city]['mpy_rt_15_64'][1]/aggregator[city]['mpy_rt_15_64'][0]
             subDict['state_name_2016'] = aggregator[city]['state']
             data[city] = subDict
-        db.save(db_doc)
+        db.save(data)
 
 if __name__== __name__:
     loading = dataLoader()
