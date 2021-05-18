@@ -23,7 +23,7 @@ interested_keywords=['covid19','coronavirus','covid-19','covid','pandemic','outb
                      'quarantine','selfquarantine', 'virus','clinical trial', 'confirmed positive case','contactless','forehead thermometer','herd immunity','novel coronavirus',' ppe ',
                      'self-quarantine','flatten the curve','jobloss','wage','wageloss','socialdistancing','financialaid','lockdown','screening','ventilator',' wfh ',
                      'lock down','oxygen cylinder','oxygen concentrator','oxygen','vaccine','astrazeneca','pfizer','sputnik','fights covid','mutant','double mutant','spike protein',
-                     'mypandemicsurvivalplan','quarintineandchill','remdesivir','steroids','contact tracing','physical distancing','use santizer','wear mask','self-isolation',' who ']
+                     'mypandemicsurvivalplan','quarintineandchill','remdesivir','steroids','contact tracing','physical distancing','use santizer','wear mask','self-isolation']
 locat=[113.338953078, -43.6345972634, 153.569469029, -10.6681857235]
 class dbListener(SL):
     def on_data(self, raw_data):
