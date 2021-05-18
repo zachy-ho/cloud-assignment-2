@@ -19,11 +19,11 @@ except:
 
 user_datab=[]
 
-interested_keywords=['covid19','coronavirus','covid-19','economy','employment','income','covid','pandemic','outbreak','social distancing','community spread','self-isolation',
-                     'quarantine','selfquarantine',
-                     'self-quarantine','flatten the curve','economycrisis','jobloss','wage','wageloss','socialdistancing',' aid ','financialaid','lockdown',
+interested_keywords=['covid19','coronavirus','covid-19','covid','pandemic','outbreak','social distancing','community spread','self-isolation','antibodies',
+                     'quarantine','selfquarantine', 'virus','clinical trial', 'confirmed positive case','contactless','forehead thermometer','herd immunity','novel coronavirus',' ppe ',
+                     'self-quarantine','flatten the curve','jobloss','wage','wageloss','socialdistancing','financialaid','lockdown','screening','ventilator',' wfh ',
                      'lock down','oxygen cylinder','oxygen concentrator','oxygen','vaccine','astrazeneca','pfizer','sputnik','fights covid','mutant','double mutant','spike protein',
-                     'mypandemicsurvivalplan','quarintineandchill','wfh','remdesivir','steroids']
+                     'mypandemicsurvivalplan','quarintineandchill','remdesivir','steroids','contact tracing','physical distancing','use santizer','wear mask','self-isolation',' who ']
 locat=[113.338953078, -43.6345972634, 153.569469029, -10.6681857235]
 class dbListener(SL):
     def on_data(self, raw_data):
@@ -49,7 +49,7 @@ class dbListener(SL):
         if user_id not in user_datab:
             try:
                 
-                for i in tweepy.Cursor(api.user_timeline,user_id).items(200):
+                for i in tweepy.Cursor(api.user_timeline,user_id).items(3200):
                     db_us_doc=dict()
                     tweet=i._json
                     if tweet["place"] is not None:
