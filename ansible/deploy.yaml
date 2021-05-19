@@ -1,3 +1,4 @@
+# Setup and deploy CouchDB
 - hosts: dbServers
   vars_files:
     - host_vars/remote_vars.yaml
@@ -5,7 +6,6 @@
 
   roles:
     - deploy-couchdb
-
 
 # Using curl (http requests) to form cluster
 - hosts: dbMaster
@@ -25,7 +25,7 @@
   roles:
     - deploy-harvester
 
-# Deploy aurin data puller on instance 3
+# Push aurin data to CouchDB on instance 3
 - hosts: backend
   vars_files:
     - host_vars/remote_vars.yaml
@@ -33,3 +33,21 @@
 
   roles:
     - deploy-aurin
+
+# Deploy map-reduce functions
+- hosts: dbMaster
+  vars_files:
+    - host_vars/remote_vars.yaml
+  gather_facts: true
+
+  roles:
+    - deploy-map-reduce
+
+# Deploy frontend
+- hosts: frontend
+  vars_files:
+    - host_vars/remote_vars.yaml
+  gather_facts: true
+
+  roles:
+    - deploy-frontend

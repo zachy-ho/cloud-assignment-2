@@ -7,7 +7,7 @@
 # consumer_secret="AwgyemcsnEYGV2OI50ptsYNKQm0zgo8j96n7Sfyh2xtIFnWleh"
 
 # Jiashuai's token
-access_token="1392070254939938820-Ee2gt8go1NLGlNfD9CF2d6I6YRjk2a"
-access_token_secret="2cITkBEmxKEbdEcZygYuFj21ymlQorF7ydkTBaU1qh6LT"
-consumer_key="N7aUoV3YjMMxWej6P16PoAM4u"
-consumer_secret="yrpb9OORGhJw5h6px1hwWSGStyPg7tbIrBezvNqrBEyy83dQRq"
+access_token="1392070254939938820-HFBYQN3QOHROsclJ5XhstU8zYv6Pgg"
+access_token_secret="AAm6nkGty1fwMt1l2SMeEBhLA1tzj8wPS2HX2iC7eMAuf"
+consumer_key="BxalJdaSoG9teOOmCLUG0Lorf"
+consumer_secret="FCyEfwME3sgydCiUvmkr50IoursJ8lr6IfsW7NDVXpFuKtWqg2"

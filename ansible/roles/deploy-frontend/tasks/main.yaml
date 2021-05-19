@@ -1,0 +1,23 @@
+---
+- name: Pull repo
+  shell: git pull
+  args:
+    chdir: '{{ remote_git_directory }}'
+
+- name: Generate frontend config file
+  become: yes
+  template:
+    src: frontendSettings.js.j2
+    dest: '{{ remote_working_directory }}/cloud-assignment-2/frontend/src/config/couchdb.js'
+
+- name: Shutdown previous server
+  become: yes
+  shell: docker-compose down --rmi local
+  args:
+    chdir: '{{ remote_working_directory }}/cloud-assignment-2/frontend'
+
+- name: Restart server
+  become: yes
+  shell: docker-compose up --build -d
+  args:
+    chdir: '{{ remote_working_directory }}/cloud-assignment-2/frontend'

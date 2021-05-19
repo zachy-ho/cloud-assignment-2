@@ -4,7 +4,7 @@
   args:
     chdir: '{{ remote_git_directory }}'
 
-- name: Generate harvester config file
+- name: Generate aurin config file
   become: yes
   template:
     src: aurinSettings.py.j2
