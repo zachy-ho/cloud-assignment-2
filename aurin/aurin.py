@@ -41,8 +41,8 @@ class dataLoader:
                     flag = True
             if not flag:
                 subDict['unemp_rt_15'] = float(feature['properties']['unemp_rt_15'])
-                subDict['yth_unemp_rt_15_24'] = float(feature['properties']['unemp_rt_15'])
-                subDict['mpy_rt_15_24'] = float(feature['properties']['unemp_rt_15'])
+                subDict['yth_unemp_rt_15_24'] = float(feature['properties']['yth_unemp_rt_15'])
+                subDict['mpy_rt_15_24'] = float(feature['properties']['mpy_rt_15_24'])
                 subDict['state_name_2016'] = feature['properties']["state_name_2016"]
                 subDict["sa4_name_2016"] = feature['properties']['sa4_name_2016']
                 db.save(subDict)
