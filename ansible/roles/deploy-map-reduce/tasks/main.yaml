@@ -1,0 +1,55 @@
+---
+# - name: deploy map-reduce functions for tweets-db
+#   become: yes
+#   shell: "curl -X POST -d '{\"_id\": \"_design/tweets\",\"views\": {\"tweetsPerPlace\": {\"map\": \"function (doc){emit(doc.Place, 1);}\",\"reduce\": \"_count\" }},\"language\": \"javascript\"}' http://\"{{ couchdb_user }}\":\"{{ couchdb_password }}\"@{{ groups['dbMaster'][0] }}:5984/tweets-db -H \"content-type:application/json\""
+
+# - name: deploy map-reduce functions for aurin-db
+#   become: yes
+#   uri:
+#     url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_db_name }}
+#     status_code: 200
+#     method: POST
+#     user: "{{ couchdb_user }}"
+#     password: "{{ couchdb_password }}"
+#     body_format: json
+#     body: "{\"_id\": \"_design/rates\",\"views\":
+#       {\"employmentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.mpy_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"},
+#       \"youthUnemploymentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.yth_unemp_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"}
+#       },\"language\": \"javascript\"}"
+#     headers:
+#       Content-Type: "application/json"
+
+- name: deploy map-reduce functions for tweets-db
+  become: yes
+  uri:
+    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_db_name }}
+    status_code: 201
+    method: POST
+    user: "{{ couchdb_user }}"
+    password: "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    body_format: json
+    body: "{\"_id\": \"_design/tweets\",\
+            \"views\": {\"tweetsPerPlace\": {\"map\": \"function (doc){emit(doc.Place, 1);}\",\"reduce\": \"_count\"}},\
+            \"language\": \"javascript\"}"
+    headers:
+      Content-Type: "application/json"
+
+- name: deploy map-reduce functions for aurin-db
+  become: yes
+  uri:
+    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_db_name }}
+    status_code: 201
+    method: POST
+    user: "{{ couchdb_user }}"
+    password: "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    body_format: json
+    body: "{\"_id\": \"_design/rates\",\
+            \"views\":{\"employmentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.mpy_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"},\
+            \"youthUnemploymentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.yth_unemp_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"}},\
+            \"language\": \"javascript\"}"
+    headers:
+      Content-Type: "application/json"
