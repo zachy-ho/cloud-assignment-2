@@ -18,6 +18,8 @@ COPY . .
 
 # Install dependencies
 RUN npm install
+RUN export NODE_OPTIONS=--max_old_space_size=4096
+RUN npm rebuild node-sass
 
 # Run harvester
 CMD ["npm", "start"]
