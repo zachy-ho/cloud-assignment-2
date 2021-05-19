@@ -45,7 +45,7 @@
 
 - name: set groups to inventory file
   lineinfile:
-    line: "[harvester:children]\ninstance_1\n\n[frontend:children]\ninstance_4\n\n[backend:children]\ninstance_3\n\n[dbServers:children]\ndbMaster\ndbWorker\n\n[dbMaster:children]\ninstance_2\n\n[dbWorker:children]\ninstance_3\ninstance_4\n"
+    line: "[frontend:children]\ninstance_1\n\n[backend:children]\ninstance_3\n\n[dbServers:children]\ndbMaster\ndbWorker\n\n[dbMaster:children]\ninstance_2\n\n[dbWorker:children]\ninstance_3\ninstance_4\n"
     dest: "inventory/hosts.ini"
 
 - name: set ip addresses to inventory file
