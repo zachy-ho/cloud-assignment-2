@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import couchAPI from '../api';
-import styles from './Scenario1.module.scss';
+import './Scenario1.css';
 import { StatesEnum } from '../analysis/enum';
 import { getTweetFrequencyByState, getEmploymentRateByState } from '../analysis/dataProcessor';
 
@@ -54,7 +54,7 @@ function Scenario1() {
   []);
 
   return (
-    <div className={styles.container}>
+    <div className="scenario1-container">
       <h1>
         Scenario 1
       </h1>
