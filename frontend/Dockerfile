@@ -19,7 +19,6 @@ COPY . .
 # Install dependencies
 RUN npm install
 RUN export NODE_OPTIONS=--max_old_space_size=4096
-RUN npm rebuild node-sass --sass-binary-name=linux-x64-83
 
 # Run harvester
 CMD ["npm", "start"]
