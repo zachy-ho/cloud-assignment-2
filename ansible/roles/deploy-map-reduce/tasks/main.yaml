@@ -47,7 +47,7 @@
     force_basic_auth: yes
     return_content: yes
     body_format: json
-    body: "{\"_id\": \"_design/rates\",\
+    body: "{\"_id\": \"_design/unemployment\",\
             \"views\":{\"employmentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.mpy_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"},\
             \"youthUnemploymentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.yth_unemp_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"}},\
             \"language\": \"javascript\"}"
