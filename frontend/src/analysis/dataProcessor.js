@@ -28,3 +28,16 @@ export const getTweetFrequencyByState = (couchData, states) => {
 
   return tweetFreq;
 };
+
+export const getEmploymentRateByState = (couchData, states) => {
+  const stateRate = initializeDict(states, 0);
+
+  // Formulate object with state names and overall unemployment rate
+  const rates = couchData.data.rows;
+  for (let i = 0; i < rates.length; i += 1) {
+    const stateName = rates[i].key;
+    stateRate[stateName] = rates[i].value;
+  }
+
+  return stateRate;
+};
