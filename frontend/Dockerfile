@@ -21,7 +21,7 @@ RUN npm install
 RUN export NODE_OPTIONS=--max_old_space_size=4096
 
 RUN mkdir -p node_modules/node-sass/vendor/linux-x64-64
-RUN https://github.com/sass/node-sass/releases/download/v6.0.0/linux-x64-64_binding.node -o node_modules/node-sass/vendor/linux-x64-64/binding.node
+RUN curl -L https://github.com/sass/node-sass/releases/download/v6.0.0/linux-x64-64_binding.node -o node_modules/node-sass/vendor/linux-x64-64/binding.node
 RUN npm rebuild node-sass
 
 # Run harvester
