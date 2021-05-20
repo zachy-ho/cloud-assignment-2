@@ -22,7 +22,7 @@
 - name: deploy map-reduce functions for tweets-db
   become: yes
   uri:
-    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_db_name }}
+    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_tweets_name }}
     status_code: 201
     method: POST
     user: "{{ couchdb_user }}"
@@ -39,7 +39,7 @@
 - name: deploy map-reduce functions for aurin-db
   become: yes
   uri:
-    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_db_name }}
+    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_labour }}
     status_code: 201
     method: POST
     user: "{{ couchdb_user }}"

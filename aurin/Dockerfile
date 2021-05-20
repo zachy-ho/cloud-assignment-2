@@ -17,4 +17,4 @@ COPY . .
 RUN pip install -r requirements.txt
 
 # Run harvester
-CMD ["python3", "aurin.py"]
+CMD ["python3", "test.py"]
