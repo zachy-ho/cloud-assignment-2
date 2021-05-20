@@ -59,7 +59,7 @@ sh ./setup-environment.sh
 * Form CouchDB clusters
 * Deploy tweets harvester on instance_2 (dbMaster)
 * Push AURIN data to CouchDB
-* Add map-reduce functions to CouchDB
+* Apply MapReduce views to CouchDB
 * Deploy frontend
 ```
 ./deploy.sh
