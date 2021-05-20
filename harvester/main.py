@@ -7,10 +7,10 @@ from tweepy import OAuthHandler as OA
 from tweepy import Stream
 from urllib3.exceptions import ProtocolError
 import creds
-from harvesterSettings import host_ip, couchdb_name
+from harvesterSettings import host_ip, couchdb_tweets_name
 
 couch_server=couchdb.Server("http://admin:admin@"+host_ip+":5984")
-db_nam=couchdb_name
+db_nam=couchdb_tweets_name
 
 try:
     db = couch_server.create(db_nam)

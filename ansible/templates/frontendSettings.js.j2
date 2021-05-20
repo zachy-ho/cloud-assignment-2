@@ -1,3 +1,5 @@
 const host = '{{ groups['dbMaster'][0] }}';
 export const baseUrl = `http://${host}:5984`;
-export const dbName = '{{ couchdb_db_name }}';
+export const couchdb_tweets_name = '{{ couchdb_db_name }}';
+export const couchdb_aurin_labour = '{{ couchdb_aurin_labour }}';
+export const couchdb_mortality_name = '{{ couchdb_mortality_name }}';
