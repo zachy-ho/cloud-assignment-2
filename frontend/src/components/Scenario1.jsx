@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import couchAPI from '../api';
-import './Scenario1.css';
+import './Scenario.css';
 import { StatesEnum } from '../analysis/enum';
-import { getTweetFrequencyByState, getEmploymentRateByState } from '../analysis/dataProcessor';
+import { getTweetFrequencyByArea, getEmploymentRateByState } from '../analysis/dataProcessor';
+import { couchdbTweetsName, couchdbAurinLabour } from '../config/couchdb';
 
 const states = Object.values(StatesEnum).sort();
 
@@ -14,18 +15,12 @@ function Scenario1() {
   // Load tweets per state from couchdb mapreduce tweetsPerPlace
   useEffect(() => {
     if (Object.keys(stateTweets).length === 0) {
-      couchAPI.get('tweets-db/_design/tweets/_view/tweetsPerPlace?group=true')
+      couchAPI.get(`${couchdbTweetsName}/_design/tweets/_view/tweetsPerPlace?group=true`)
         .then((res) => {
           // Convert to statewide data
-          const tweetFreq = getTweetFrequencyByState(res, states);
+          const tweetFreq = getTweetFrequencyByArea(res, states);
           setStateTweets(tweetFreq);
           return tweetFreq;
-        })
-        .then((res) => {
-          console.log('tweets');
-          console.log(res);
-          console.log(Object.keys(res));
-          console.log(Object.values(res));
         })
         .catch((err) => {
           console.log(err);
@@ -36,18 +31,15 @@ function Scenario1() {
   // Load unemployment rate from couchdb mapreduce
   useEffect(() => {
     if (Object.keys(stateEmployment).length === 0) {
-      couchAPI.get('aurin-db/_design/unemployment/_view/employmentRateByState?group=true')
+      couchAPI.get(`${couchdbAurinLabour}/_design/unemployment/_view/employmentRateByState?group=true`)
         .then((res) => {
           // Convert to obj
           const unemploymentRates = getEmploymentRateByState(res, states);
           setStateEmployment(unemploymentRates);
           return unemploymentRates;
         })
-        .then((res) => {
-          console.log('Aurin');
-          console.log(res);
-          console.log(Object.keys(res));
-          console.log(Object.values(res));
+        .catch((err) => {
+          console.log(err);
         });
     }
   },
@@ -59,9 +51,10 @@ function Scenario1() {
         Scenario 1
       </h1>
       <p>
-        We compare the total number of tweets in different states in Australia
+        We compare the total number of COVID-related tweets in different states in Australia
         with their employment rate.
-
+      </p>
+      <p>
         The chart below shows the comparison.
       </p>
       {(Object.keys(stateTweets).length === 0
@@ -122,19 +115,33 @@ function Scenario1() {
 
         )}
       <p>
-        A hypothesis can be made that places (states) with higher employment
-        rates tend to tweet about COVID less. Perhaps society worries less about
-        the effects of COVID if their livelihood (i.e. employment) is unaffected
-        .
-
-        However, the data used for this comparison here does not take into
-        acocunt the total number of tweets made in each state. Thus, there is
-        no comparison on the ratio of COVID-related vs. non COVID-related tweets
-        . This means that a higher number COVID-related tweets may come from
-        states that have a higher/denser population. This scenario also does
-        not consider the percentage of youth among each states&apos; population.
-        This is significant as it can be assumed that youths tend to tweet more
-        than other age groups (e.g. older people).
+        We formulate a hypothesis that places (states) with higher employment
+        rates tend to tweet about COVID less. This is based on the assumption
+        that people worry less about the effects of COVID if their livelihood
+        (i.e. employment) is seemingly unaffected.
+      </p>
+      <p>
+        From the data above, we can see that ... (waiting for Agrim to fix
+        the wrongly saved data)
+      </p>
+      <h3>
+        Assumptions and other notes on data
+      </h3>
+      <p>
+        We must acknowledge that the comparison made in this scenario
+        disregards a lot of different factors that affect employment rate. For
+        example, we did not consider data on the homeless across states. We
+        also did not look at the number of professionals across different
+        industries and compare them with the what the demand is. This data can
+        vary from state to state as well.
+      </p>
+      <p>
+        On the other hand, we are taking the raw number of COVID-related tweets
+        instead of taking a percentage of COVID-related tweets over the total
+        number of tweets over a specific period for each state. Thus, the data
+        on the total number of tweets can be influenced by the distribution of
+        young adults (which we assume is the group that tends to tweet the most)
+        across states.
       </p>
     </div>
   );
