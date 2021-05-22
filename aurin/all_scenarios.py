@@ -1,11 +1,12 @@
 import json
 import pandas as pd
 import couchdb
-from aurinSettings import host_ip, couchdb_labour_name, couchdb_mortality_name
+from aurinSettings import host_ip, couchdb_labour_name, couchdb_mortality_name, couchdb_crash_name
 
 couch_server = couchdb.Server("http://admin:admin@"+host_ip+":5984")
 db_1_nam = couchdb_labour_name
 db_2_nam = couchdb_mortality_name
+db_3_nam = couchdb_crash_name
 
 try:
     db1 = couch_server.create(db_1_nam)
@@ -16,6 +17,11 @@ try:
     db2 = couch_server.create(db_2_nam)
 except:
     db2 = couch_server[db_2_nam]
+
+try:
+    db3 = couch_server.create(db_3_nam)
+except:
+    db3 = couch_server[db_3_nam]
 
 class dataLoader:
 
@@ -96,6 +102,20 @@ class dataLoader:
             subDict['p_rt_ratio'] = aggregator[city]['p_rt_ratio'][1]/aggregator[city]['p_rt_ratio'][0]
             subDict["sa4_name"] = city
             db2.save(subDict)
+
+        # Scenario 3
+        data = pd.read_csv('ardd_fatalities_apr_2021.csv', low_memory=False)
+        data = data[data.Year.isin([2020,2021])]
+        data = data[["State", "Month", "Year", "Crash ID"]]
+        data = data.groupby(['Year','Month', 'State']).size()
+        for key, values in data.items():
+            print(key , values)
+            subDict = {}
+            subDict["State"] = key[2]
+            subDict["Month"] = key[1]
+            subDict["Year"] = key[0]
+            subDict["Count"] = values
+            db3.save(subDict)
 
 if __name__== __name__:
     loading = dataLoader()

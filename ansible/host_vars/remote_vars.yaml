@@ -12,3 +12,4 @@ couchdb_container_name: 'couchdb_'
 couchdb_tweets_name: "tweets-db"
 couchdb_aurin_labour: "labour-db"
 couchdb_aurin_mortality: "mortality-db"
+couchdb_aurin_crash: "crush-db"
