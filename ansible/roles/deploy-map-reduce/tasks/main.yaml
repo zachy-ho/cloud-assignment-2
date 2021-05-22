@@ -36,7 +36,7 @@
     headers:
       Content-Type: "application/json"
 
-- name: deploy map-reduce functions for aurin-db
+- name: deploy map-reduce functions for labour-db
   become: yes
   uri:
     url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_labour }}
@@ -50,6 +50,23 @@
     body: "{\"_id\": \"_design/unemployment\",\
             \"views\":{\"employmentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.mpy_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"},\
             \"youthUnemploymentRateByState\": {\"map\": \"function (doc){emit(doc.state_name_2016, doc.yth_unemp_rt_15_24);}\",\"reduce\": \"function (keys, values, rereduce){return sum(values)/values.length;}\"}},\
+            \"language\": \"javascript\"}"
+    headers:
+      Content-Type: "application/json"
+
+- name: deploy map-reduce functions for mortality-db
+  become: yes
+  uri:
+    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_mortality }}
+    status_code: 201
+    method: POST
+    user: "{{ couchdb_user }}"
+    password: "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    body_format: json
+    body: "{\"_id\": \"_design/mortality\",\
+            \"views\": {\"mortalityBySA4\": {\"map\": \"function (doc){emit(doc.sa4_name, [doc.p_crude_rt, doc.p_rt_ratio]);}\"}},\
             \"language\": \"javascript\"}"
     headers:
       Content-Type: "application/json"
