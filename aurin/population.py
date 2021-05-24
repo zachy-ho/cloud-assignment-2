@@ -26,4 +26,4 @@ class popReader:
 
 if __name__== __name__:
     popPush = popReader()
-    popReader.crashes()
+    popReader.popPusher()
