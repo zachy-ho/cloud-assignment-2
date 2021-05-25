@@ -84,7 +84,7 @@
     body_format: json
     body: "{\"_id\": \"_design/crashes\",\
             \"views\":{\"nswByMonth\": {\"map\": \"function (doc) {if (doc.State.toLowerCase() === 'nsw') {emit([doc.Year, doc.Month], doc.Count);}}\"},\
-            \"vicByMonth\": {\"map\": \"function (doc){if (doc.State.toLowerCase() === 'nsw') {emit([doc.Year, doc.Month], doc.Count);}}\"}},\
+            \"vicByMonth\": {\"map\": \"function (doc){if (doc.State.toLowerCase() === 'vic') {emit([doc.Year, doc.Month], doc.Count);}}\"}},\
             \"language\": \"javascript\"}"
     headers:
       Content-Type: "application/json"
