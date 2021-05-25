@@ -18,6 +18,7 @@ COPY . .
 
 # Install dependencies
 RUN npm install
+RUN npm install --save react-router-dom
 RUN export NODE_OPTIONS=--max_old_space_size=4096
 
 # Run harvester
