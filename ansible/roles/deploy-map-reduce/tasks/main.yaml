@@ -70,3 +70,38 @@
             \"language\": \"javascript\"}"
     headers:
       Content-Type: "application/json"
+
+- name: deploy map-reduce functions for labour-db
+  become: yes
+  uri:
+    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_crash }}
+    status_code: 201
+    method: POST
+    user: "{{ couchdb_user }}"
+    password: "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    body_format: json
+    body: "{\"_id\": \"_design/crashes\",\
+            \"views\":{\"nswByMonth\": {\"map\": \"function (doc) {if (doc.State.toLowerCase() === 'nsw') {emit([doc.Year, doc.Month], doc.Count);}}\"},\
+            \"vicByMonth\": {\"map\": \"function (doc){if (doc.State.toLowerCase() === 'nsw') {emit([doc.Year, doc.Month], doc.Count);}}\"}},\
+            \"language\": \"javascript\"}"
+    headers:
+      Content-Type: "application/json"
+
+- name: deploy map-reduce functions for labour-db
+  become: yes
+  uri:
+    url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_population }}
+    status_code: 201
+    method: POST
+    user: "{{ couchdb_user }}"
+    password: "{{ couchdb_password }}"
+    force_basic_auth: yes
+    return_content: yes
+    body_format: json
+    body: "{\"_id\": \"_design/population\",\
+            \"views\": {\"allState\": {\"function (doc) {emit(doc.State, doc.pop);}\"}},\
+            \"language\": \"javascript\"}"
+    headers:
+      Content-Type: "application/json"
