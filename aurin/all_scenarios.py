@@ -1,12 +1,13 @@
 import json
 import pandas as pd
 import couchdb
-from aurinSettings import host_ip, couchdb_labour_name, couchdb_mortality_name, couchdb_crash_name
+from aurinSettings import host_ip, couchdb_labour_name, couchdb_mortality_name, couchdb_crash_name, couchdb_population_name
 
 couch_server = couchdb.Server("http://admin:admin@"+host_ip+":5984")
 db_1_nam = couchdb_labour_name
 db_2_nam = couchdb_mortality_name
 db_3_nam = couchdb_crash_name
+db_4_nam = couchdb_population_name
 
 try:
     db1 = couch_server.create(db_1_nam)
@@ -23,11 +24,16 @@ try:
 except:
     db3 = couch_server[db_3_nam]
 
+try:
+    db4 = couch_server.create(db_4_nam)
+except:
+    db4 = couch_server[db_4_nam]
+
 class dataLoader:
 
     def loader(self):
 
-        # Scenario 1
+        # labour-db
         file = open("DESE_-_Labour_Market_-_Summary_Data__SA4__December_2020.json/data2884855105501059863.json")
         cities = ['Sydney', 'Melbourne', 'Brisbane', 'Moreton Bay', 'Adelaide', 'Perth']
         count = {'Sydney':0, 'Melbourne':0, 'Brisbane':0, 'Moreton Bay':0, 'Adelaide':0, 'Perth':0}
@@ -70,7 +76,7 @@ class dataLoader:
             db1.save(subDict)
             data[city] = subDict
 
-        # Scenario 2
+        # mortality-db
         file = open("AIHW_Mortality/data3122319362349140854.json")
         cities = ['Sydney', 'Melbourne', 'Brisbane', 'Moreton Bay', 'Adelaide', 'Perth']
         aggregator = {'Sydney':{'p_rt_ratio':[0,0], 'p_crude_rt':[0,0]}, 'Melbourne':{'p_rt_ratio':[0,0], 'p_crude_rt':[0,0]}, \
@@ -103,7 +109,7 @@ class dataLoader:
             subDict["sa4_name"] = city
             db2.save(subDict)
 
-        # Scenario 3
+        # crush-db
         data = pd.read_csv('ardd_fatalities_apr_2021.csv', low_memory=False)
         data = data[data.Year.isin([2020,2021])]
         data = data[["State", "Month", "Year", "Crash ID"]]
@@ -116,6 +122,15 @@ class dataLoader:
             subDict["Year"] = key[0]
             subDict["Count"] = values
             db3.save(subDict)
+        
+        # population-db
+        data = pd.read_csv('Australia_pop.csv')
+        for index, row in data.iterrows():
+            subDict={}
+            subDict['State'] = row['States']
+            temp = row['2020'].replace(",","")
+            subDict["pop"] = int(temp)
+            db4.save(subDict)
 
 if __name__== __name__:
     loading = dataLoader()
