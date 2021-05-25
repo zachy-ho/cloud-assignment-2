@@ -71,7 +71,7 @@
     headers:
       Content-Type: "application/json"
 
-- name: deploy map-reduce functions for labour-db
+- name: deploy map-reduce functions for crash-db
   become: yes
   uri:
     url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_crash }}
@@ -89,7 +89,7 @@
     headers:
       Content-Type: "application/json"
 
-- name: deploy map-reduce functions for labour-db
+- name: deploy map-reduce functions for population-db
   become: yes
   uri:
     url: http://{{ groups['dbMaster'][0] }}:5984/{{ couchdb_aurin_population }}
