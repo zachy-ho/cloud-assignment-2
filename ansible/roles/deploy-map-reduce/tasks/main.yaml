@@ -101,7 +101,7 @@
     return_content: yes
     body_format: json
     body: "{\"_id\": \"_design/population\",\
-            \"views\": {\"allState\": {\"function (doc) {emit(doc.State, doc.pop);}\"}},\
+            \"views\": {\"allStates\": {\"map\": \"function (doc){emit(doc.State, doc.pop);}\"}},\
             \"language\": \"javascript\"}"
     headers:
       Content-Type: "application/json"
