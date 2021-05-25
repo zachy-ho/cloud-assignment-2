@@ -3,8 +3,8 @@ import Plot from 'react-plotly.js';
 import couchAPI from '../api';
 import './Scenario.css';
 import { StatesEnum } from '../analysis/enum';
-import { getTweetFrequencyByArea, getEmploymentRateByState } from '../analysis/dataProcessor';
-import { couchdbTweetsName, couchdbAurinLabour } from '../config/couchdb';
+import { getTweetFrequencyByArea, getEmploymentRateByState, getPopulationData } from '../analysis/dataProcessor';
+import { couchdbTweetsName, couchdbAurinLabour, couchdbPopulationName } from '../config/couchdb';
 
 const states = Object.values(StatesEnum).sort();
 
@@ -15,11 +15,25 @@ function Scenario1() {
   // Load tweets per state from couchdb mapreduce tweetsPerPlace
   useEffect(() => {
     if (Object.keys(stateTweets).length === 0) {
-      couchAPI.get(`${couchdbTweetsName}/_design/tweets/_view/tweetsPerPlace?group=true`)
+      const promises = [
+        couchAPI.get(`${couchdbTweetsName}/_design/tweets/_view/tweetsPerPlace?group=true`),
+        couchAPI.get(`${couchdbPopulationName}/_design/population/_view/allStates`),
+      ];
+
+      Promise.all(promises)
         .then((res) => {
           // Convert to statewide data
-          const tweetFreq = getTweetFrequencyByArea(res, states);
-          setStateTweets(tweetFreq);
+          const tweetFreq = getTweetFrequencyByArea(res[0], states);
+          const popData = getPopulationData(res[1]);
+
+          {
+            const averagedFreq = {};
+            Object.keys(tweetFreq).forEach((entry) => {
+              averagedFreq[entry] = tweetFreq[entry] / popData[entry];
+            });
+            setStateTweets(averagedFreq);
+          }
+
           return tweetFreq;
         })
         .catch((err) => {
@@ -51,8 +65,12 @@ function Scenario1() {
         Scenario 1
       </h1>
       <p>
-        We compare the total number of COVID-related tweets in different states in Australia
-        with their employment rate.
+        In this scenario, we analyze whether there is a correlation between
+        unemployment rates and the number of COVID-related tweets (averaged over
+        population) across Australian states. We hypothesize that there is a
+        higher number of COVID-related tweets per population in states that have lower
+        employment rates as we theorize that people are more concerned about
+        COVID-19 if it affects their livelihood (i.e. employment).
       </p>
       <p>
         The chart below shows the comparison.
@@ -87,11 +105,14 @@ function Scenario1() {
               },
             ]}
             layout={{
-              title: 'Comparing employment rate with COVID-related tweets across Australian states',
-              width: 1280,
-              height: 720,
+              title: 'Comparing employment rate with COVID-related tweets (per population) across Australian states',
+              width: 1080,
+              height: 640,
+              xaxis: {
+                tickangle: 20,
+              },
               yaxis: {
-                title: 'COVID-related tweets',
+                title: 'COVID-related tweets (per population)',
                 titlefont: {
                   color: 'orange',
                 },
@@ -107,41 +128,48 @@ function Scenario1() {
                 tickfont: {
                   color: 'blue',
                 },
+                range: [68, 76],
                 overlaying: 'y',
                 side: 'right',
               },
             }}
           />
-
         )}
       <p>
-        We formulate a hypothesis that places (states) with higher employment
-        rates tend to tweet about COVID less. This is based on the assumption
-        that people worry less about the effects of COVID if their livelihood
-        (i.e. employment) is seemingly unaffected.
+        In this scenario, we analyze whether there is a correlation between unemployment
+        rates and the number of COVID-related tweets (averaged over population)
+        across Australian states. We hypothesize that there is a higher number
+        of COVID-related tweets per population in states that have lower
+        employment rates as we theorize that people are more concerned about
+        COVID-19 if it affects their livelihood (i.e. employment).
       </p>
       <p>
-        From the data above, we can see that ... (waiting for Agrim to fix
-        the wrongly saved data)
-      </p>
-      <h3>
-        Assumptions and other notes on data
-      </h3>
-      <p>
-        We must acknowledge that the comparison made in this scenario
-        disregards a lot of different factors that affect employment rate. For
-        example, we did not consider data on the homeless across states. We
-        also did not look at the number of professionals across different
-        industries and compare them with the what the demand is. This data can
-        vary from state to state as well.
+        South Australia, Victoria and  Tasmania has the highest number of
+        COVID-related tweets per population. However, their
+        employment rates vary drastically. Tasmania had the lowest employment
+        rates across the states. Perhaps people living there are truly more
+        concerned about COVID-19 and its effect on job security (I.e. having a
+        higher number of COVID-related tweets) since their employment rate was
+        the lowest.
       </p>
       <p>
-        On the other hand, we are taking the raw number of COVID-related tweets
-        instead of taking a percentage of COVID-related tweets over the total
-        number of tweets over a specific period for each state. Thus, the data
-        on the total number of tweets can be influenced by the distribution of
-        young adults (which we assume is the group that tends to tweet the most)
-        across states.
+        Victoria has the second highest employment rate even though it is one of the
+        states with a high number of COVID-related tweets per population.
+        Victorians may instead be more concerned about the effects of COVID-19
+        on aspects of life other than employment. Another reason could be that
+        Victoria has a higher population of young adults compared to other
+        states, who tend to use Twitter more than other age groups (I.e.
+        elderly, children)
+      </p>
+      <p>
+        Most other states seem to exhibit a more neutral behaviour, not explicitly
+        showing signs of aligning with our hypothesis. Apart from Tasmania,
+        Western Australia seems to be the only other state that agree with our
+        hypothesis. It has the highest employment rate but has one of the lowest
+        scores for COVID-related tweets per population. Western Australia is
+        known to have handled the pandemic rather well compared to states like
+        Victoria. That may be a core reason why residents there may be less
+        concerned about COVID-19&apos;s effects on employment!
       </p>
     </div>
   );

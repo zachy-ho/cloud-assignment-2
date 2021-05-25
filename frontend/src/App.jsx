@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import Scenario1 from './components/Scenario1';
 import Scenario2 from './components/Scenario2';
+import Scenario3 from './components/Scenario3';
 import Nav from './components/Nav';
 import './App.css';
 
@@ -32,6 +33,11 @@ function App() {
             <Route path="/scenario2">
               <WithNav>
                 <Scenario2 />
+              </WithNav>
+            </Route>
+            <Route path="/scenario3">
+              <WithNav>
+                <Scenario3 />
               </WithNav>
             </Route>
           </Switch>

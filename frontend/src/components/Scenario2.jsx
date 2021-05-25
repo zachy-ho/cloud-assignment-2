@@ -37,12 +37,35 @@ function Scenario2() {
             setSA4Tweets(tweetFreq);
             return tweetFreq;
           })
+          .then((res) => {
+            console.log(res);
+          })
           .catch((err) => {
             console.log(err);
           });
       }
     }
   }, [mortality]);
+
+  const mappedAreas = (tweets) => {
+    const rows = [];
+    Object.keys(tweets).forEach((area) => {
+      rows.push(
+        <div>
+          {Object.keys(tweets).indexOf(area) + 1}
+          {' '}
+          :
+          {' '}
+          {area}
+        </div>,
+      );
+    });
+    return (
+      <div style={{ textAlign: 'left', fontSize: '18px' }}>
+        {rows}
+      </div>
+    );
+  };
 
   return (
     <div className="scenario1-container">
@@ -51,7 +74,11 @@ function Scenario2() {
       </h1>
       <p>
         We compare the total number of tweets in different areas (SA4) in
-        Australia with the mortality rate.
+        Australia with mortality rates.
+        This scenario aims to analyze whether the mortality rates in the SA4 level
+        has any effect on number of tweets related to COVID-19. We hypothesize
+        that the higher the number of tweets made regarding COVID-19, the higher
+        the mortality rate in that area.
       </p>
       <p>
         The chart below shows the comparison.
@@ -92,22 +119,6 @@ function Scenario2() {
           />
 
         )}
-      <p>
-        A hypothesis can be made that places (states) with higher employment
-        rates tend to tweet about COVID less. Perhaps society worries less about
-        the effects of COVID if their livelihood (i.e. employment) is unaffected
-        .
-      </p>
-      <p>
-        However, the data used for this comparison here does not take into
-        acocunt the total number of tweets made in each state. Thus, there is
-        no comparison on the ratio of COVID-related vs. non COVID-related tweets
-        . This means that a higher number COVID-related tweets may come from
-        states that have a higher/denser population. This scenario also does
-        not consider the percentage of youth among each states&apos; population.
-        This is significant as it can be assumed that youths tend to tweet more
-        than other age groups (e.g. older people).
-      </p>
       {(Object.keys(SA4Tweets).length === 0
         && Object.keys(mortality).length === 0
       )
@@ -144,8 +155,47 @@ function Scenario2() {
           />
         )}
       <p>
-        Some explanation to be filled after clarification with Agrim.
+        For this scenario, we compared the number of COVID-related tweets against two
+        different mortality measures – ratio of area to average mortality, and
+        crude mortality rate.
       </p>
+      <p>
+        The two obvious outliers in this scenario are the areas Sydney (point 48)
+        and Melbourne (point 29) (kindly refer to the mapping of number IDs to SA4 areas
+        at the bottom of this page)
+        for a mapping of SA4 areas to number ids). These two areas have
+        the highest number of COVID-related tweets but their mortality rates are
+        among the lowest. This goes against our hypothesis where we assumed the
+        opposite to be true. Apart from Sydney and Melbourne, Adelaide (point 1),
+        Brisbane (point 6) and Perth (point 38) were also separated from the
+        large cluster sitting close to the x=0 line.
+      </p>
+      <p>
+        This may signify that even though certain SA4 areas have a relatively large
+        amount of COVID-related tweets, it may not mean that those areas have
+        a higher mortality rate. This could mean that the healthcare professionals
+        in these areas may have been incredibly efficient in handling the spread
+        of COVID-19, and taking drastic measures to minimize the number of
+        deaths caused by the pandemic. Conversely, this may mean that the other
+        areas with a higher mortality rate may not have performed as well.
+      </p>
+      <p>
+        That being said, we have to acknowledge that our harvested tweets were
+        the raw number rather than a percentage of the all the tweets made in
+        each area. We were unable to find data on SA4 population. In addition, the
+        large cluster situated close to the x=0 lines in both figures above may
+        be due to these areas having less dense population, not to mention that
+        not everyone geotags their tweets. Lastly, there could be unknown data
+        on other causes of mortality in these areas that display high mortality
+        rates. For example, perhaps car accidents due to poorly maintained roads
+        in Mid North Coast (point 30) could be the main reason why it has the
+        highest mortality rates, instead of COVID-19.
+      </p>
+      <h2 style={{ textAlign: 'left', fontSize: '24px' }}>
+        Map of number IDs to SA4 areas
+      </h2>
+      {Object.keys(SA4Tweets).length !== 0
+          && mappedAreas(SA4Tweets)}
     </div>
   );
 }

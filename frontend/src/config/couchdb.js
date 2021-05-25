@@ -4,3 +4,4 @@ export const couchdbTweetsName = 'tweets-db';
 export const couchdbAurinLabour = 'labour-db';
 export const couchdbMortalityName = 'mortality-db';
 export const couchdbCrashName = 'crash-db';
+export const couchdbPopulationName = 'population-db';

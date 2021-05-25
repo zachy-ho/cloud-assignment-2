@@ -13,6 +13,9 @@ function Nav() {
           <li>
             <Link to="/scenario2">Scenario 2</Link>
           </li>
+          <li>
+            <Link to="/scenario3">Scenario 3</Link>
+          </li>
         </ul>
       </nav>
     </div>

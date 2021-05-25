@@ -89,3 +89,20 @@ export const getCrudeMortality = (mortalityData, ordered) => {
 
   return ratios;
 };
+
+export const getPopulationData = (populationData) => {
+  const { rows } = populationData.data;
+  const popObj = {};
+  for (let i = 0; i < rows.length; i += 1) {
+    popObj[rows[i].key] = rows[i].value;
+  }
+  return popObj;
+};
+
+export const mapify = (data) => {
+  const map = new Map();
+  for (let i = 0; i < data.length; i += 1) {
+    map.set(data[i].key, data[i].value);
+  }
+  return map;
+};
