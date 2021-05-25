@@ -1,4 +1,4 @@
-FROM node:14.17.0
+FROM node:12.18.2
 
 # Running proxies
 ENV HTTP_PROXY http://wwwproxy.unimelb.edu.au:8000/
