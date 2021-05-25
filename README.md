@@ -1,4 +1,11 @@
 # cloud-assignment-2
+Team 49
 
-## Report shared doc
-https://unimelbcloud-my.sharepoint.com/:w:/g/personal/jiashuaiy_student_unimelb_edu_au/EfwvCYrYkfZFhUIEHmG0_KYB9raGy_nzDYVU9vwPcZywOw?e=NYU4gh
+City: Melbourne, VIC
+
+Team members:
+- Yue Yang Ho, 860212
+- Zhuolun Wu, 954465
+- Vignesh Lakshminarayanan, 1032043
+- Agrim Binjola, 1154479
+- Jiashuai Yu, 954064
