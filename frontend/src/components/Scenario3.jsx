@@ -71,8 +71,6 @@ function Scenario3() {
           }
         }
       });
-    // console.log(...nswTweets.keys());
-    // console.log(...nswTweets.values());
   }, [vicTweets, nswTweets]);
 
   // Get NSW tweets
