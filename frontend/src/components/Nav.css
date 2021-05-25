@@ -14,3 +14,19 @@
 .navbar ul li {
   margin: 0px 20px;
 }
+
+.navbar button {
+  padding: 8px 24px;
+  background-color: white;
+  border: none;
+  font: inherit;
+  color: black;
+  border-radius: 10px;
+  box-shadow: 2px 5px #1f1f1f;
+}
+
+.navbar button:active {
+  background-color: #f4f4ed;
+  box-shadow: 2px 3px black;
+  transform: translateY(4px);
+}
